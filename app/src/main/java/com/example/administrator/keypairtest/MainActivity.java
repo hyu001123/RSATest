@@ -52,9 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             KeyPair keyPair = KeyPairGenerator.getInstance("RSA").generateKeyPair();
 //使用公钥进行加密，私钥进行解密（也可以反过来使用）
             PublicKey publicKey = keyPair.getPublic();
+            //得到的密钥需要进行Base64编码成字符串便于数据持久化，同时注意在加密解密时用到密钥时要进行Base64的解码。
             pubKeyStr= Base64.getEncoder().encodeToString(publicKey.getEncoded());
             Log.i("tag","init_publicKey="+pubKeyStr);
             PrivateKey privateKey = keyPair.getPrivate();
+            //Base64编码
             priKeyStr=Base64.getEncoder().encodeToString(privateKey.getEncoded());
             Log.i("tag","init_privatekey="+priKeyStr);
 //3,使用公钥初始化密码器
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static PublicKey getPublicKey(String key) throws Exception {
         byte[] keyBytes;
-        keyBytes = decryptBASE64(key);
+        //Base64解码成byte
+         keyBytes = decryptBASE64(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(keySpec);
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static PrivateKey getPrivateKey(String key) throws Exception {
         byte[] keyBytes;
         Log.i("tag","私密:=="+key);
+        //Base64解码成byte
         keyBytes = decryptBASE64(key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
