@@ -1,4 +1,4 @@
-package com.example.administrator.keypairtest;
+﻿package com.example.administrator.keypairtest;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         encode.setOnClickListener(this);
         decode.setOnClickListener(this);
         try {
-            //1，获取cipher 对象
+            ////1，获取cipher 对象
             cipher = Cipher.getInstance("RSA");
            /* KeyGenParameterSpec keyGenParameterSpec = new KeyGenParameterSpec
                      .Builder(KEYSTORE_ALIAS, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
